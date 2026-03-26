@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pickup Summary | Velvet Crust Cakes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">Velvet Crust</div>
+        <div class="nav-links">
+            <a href="index.html" class="btn-cream" style="background:transparent; color:var(--cream); border:none; box-shadow:none;">Home</a>
+            <a href="shop.html" class="btn-cream">Orders</a>
+            <a href="shop.html" class="btn-cream">Design</a>
+            <a href="summary.html" class="btn-cream">Pickup (<span id="cart-count">0</span>)</a>
+            <a href="login.html" class="btn-cream btn-outline">Login</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section id="summary" class="page">
+            <h2 style="color: var(--cream);">Pickup Summary</h2>
+            <table>
+                <thead>
+                    <tr><th>Item</th><th>Qty</th><th>Subtotal</th><th>Action</th></tr>
+                </thead>
+                <button onclick="window.location.href='shop.html'" class="btn-cream btn-outline" style="margin-top: 20px; font-size: 0.8rem;">+ Add More Cakes</button>
+                <tbody id="cart-items"></tbody>
+            </table>
+            <div style="text-align: right; margin-top: 40px; border-top: 1px solid var(--glass-border); padding-top: 20px;">
+                <h3 style="color: var(--cream); font-size: 1.8rem;">Grand Total: $<span id="total-price">0</span></h3>
+                <button class="btn-cream" onclick="alert('Proceeding to Checkout for Pickup...')" style="font-size: 1.2rem; padding: 15px 40px; margin-top: 15px;">Confirm Pickup Order</button>
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

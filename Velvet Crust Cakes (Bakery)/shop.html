@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu | Velvet Crust Cakes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">Velvet Crust</div>
+        <div class="nav-links">
+            <a href="index.html" class="btn-cream" style="background:transparent; color:var(--cream); border:none; box-shadow:none;">Home</a>
+            <a href="shop.html" class="btn-cream">Orders</a>
+            <a href="shop.html" class="btn-cream">Design</a>
+            <a href="summary.html" class="btn-cream">Pickup (<span id="cart-count">0</span>)</a>
+            <a href="login.html" class="btn-cream btn-outline">Login</a>
+        </div>
+    </nav>
+
+    <div id="cart-modal" class="modal-overlay">
+        <div class="container" style="max-width: 400px; text-align: center;">
+            <h2 style="color: var(--cream);">Confirm Selection</h2>
+            <p id="modal-msg"></p>
+            <div id="qty-box" style="display:none; margin: 20px;">
+                <label>Quantity: </label>
+                <input type="number" id="item-qty" value="1" min="1" style="width: 60px; padding: 5px; border-radius: 5px;">
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button id="modal-yes" class="btn-cream" style="flex:1">Yes</button>
+                <button onclick="closeModal('cart-modal')" class="btn-cream btn-outline" style="flex:1;">No</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <section id="shop" class="page">
+            <h2 style="color: var(--cream); border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; margin-bottom: 30px;">Our Full Collection & Custom Designs</h2>
+            <div class="grid" id="full-grid"></div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
