@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScholarPortal | Academic Excellence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,600&family=Montserrat:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================================
+           SCHOLARPORTAL - PRESTIGE ACADEMIC PALETTE
+           ========================================================= */
+        :root {
+            --bg-marble: #F4F4F4;
+            --navy-prestige: #0F172A;
+            --gold-accent: #D4AF37;
+            --folder-crimson: #7A1921;
+            --folder-emerald: #164E36;
+            --folder-slate: #334155;
+            --paper-white: #FCFBFA;
+            --ink-black: #1E1E1E;
+            
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Montserrat', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-marble);
+            color: var(--ink-black);
+            font-family: var(--font-sans);
+            /* Subtle marble/noise texture */
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.05"/%3E%3C/svg%3E');
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ================= PREMIUM GLASSMORPHISM NAVBAR ================= */
+        nav {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--gold-accent);
+        }
+
+        .brand-logo {
+            font-family: var(--font-serif);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--paper-white);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-logo::before {
+            content: '🏛️';
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #CBD5E1;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold-accent);
+        }
+
+        .nav-info-badge {
+            background: transparent;
+            border: 1px solid var(--gold-accent);
+            color: var(--gold-accent);
+            padding: 0.5rem 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-info-badge:hover, .nav-info-badge.active {
+            background: var(--gold-accent);
+            color: var(--navy-prestige);
+            font-weight: 700;
+        }
+
+        /* ================= LAYOUT GRID ================= */
+        .portal-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 3rem;
+            padding: 3rem 4rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+            flex-grow: 1;
+        }
+
+        .section-header {
+            font-family: var(--font-serif);
+            font-size: 3rem;
+            color: var(--navy-prestige);
+            margin-bottom: 3rem;
+            border-bottom: 2px solid #E2E8F0;
+            padding-bottom: 1rem;
+        }
+
+        /* ================= PHYSICAL FOLDER MODULES ================= */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem 2rem;
+        }
+
+        /* Ang "Malalang CSS" para sa Folders */
+        .course-folder {
+            position: relative;
+            margin-top: 35px; /* Space for the folder tab */
+            border-radius: 0 12px 12px 12px;
+            padding: 1.5rem;
+            box-shadow: 10px 10px 25px rgba(0,0,0,0.08);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-folder:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 15px 15px 30px rgba(0,0,0,0.12);
+        }
+
+        /* Folder Tab Generation using ::before */
+        .course-folder::before {
+            content: attr(data-dept);
+            position: absolute;
+            top: -35px;
+            left: 0;
+            height: 35px;
+            padding: 0 25px;
+            display: flex;
+            align-items: center;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 2px;
+            border-radius: 12px 12px 0 0;
+            /* Creates the angled tab effect */
+            clip-path: polygon(0 0, 85% 0, 100% 100%, 0 100%);
+        }
+
+        /* Folder Colors */
+        .f-crimson { background: var(--folder-crimson); }
+        .f-crimson::before { background: var(--folder-crimson); }
+        
+        .f-emerald { background: var(--folder-emerald); }
+        .f-emerald::before { background: var(--folder-emerald); }
+        
+        .f-slate { background: var(--folder-slate); }
+        .f-slate::before { background: var(--folder-slate); }
+
+        /* Lined Paper inside the folder */
+        .folder-paper {
+            background-color: var(--paper-white);
+            border-radius: 4px;
+            padding: 1.5rem;
+            flex-grow: 1;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+            /* Classic Ruled Paper Effect */
+            background-image: linear-gradient(transparent 95%, #CBD5E1 5%);
+            background-size: 100% 2rem;
+            line-height: 2rem;
+            position: relative;
+        }
+
+        /* Red margin line on the paper */
+        .folder-paper::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(220, 38, 38, 0.3);
+        }
+
+        .course-title {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--navy-prestige);
+            margin-left: 20px;
+            padding-top: 5px;
+            background: var(--paper-white); /* Masks the lines behind text */
+            display: inline-block;
+        }
+
+        .course-credits {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: #64748B;
+            margin-left: 20px;
+            display: block;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .add-course-btn {
+            width: calc(100% - 20px);
+            margin-left: 20px;
+            margin-top: 1rem;
+            background: var(--navy-prestige);
+            color: var(--paper-white);
+            border: none;
+            padding: 0.8rem;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .add-course-btn:hover {
+            background: var(--gold-accent);
+            color: var(--navy-prestige);
+        }
+
+        .add-course-btn.added {
+            background: #E2E8F0;
+            color: #94A3B8;
+            pointer-events: none;
+        }
+
+        /* ================= SEMESTER DOCKET (SIDEBAR) ================= */
+        .semester-docket {
+            background: var(--paper-white);
+            border: 1px solid #E2E8F0;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+
+        .docket-header {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-bottom: 2px dashed #CBD5E1;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .enrolled-list {
+            list-style: none;
+            margin-bottom: 2rem;
+            min-height: 100px;
+        }
+
+        .enrolled-list li {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #F1F5F9;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .fee-total {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy-prestige);
+            text-align: right;
+            margin-bottom: 1.5rem;
+        }
+
+        .pay-btn {
+            width: 100%;
+            background: var(--folder-emerald);
+            color: white;
+            border: none;
+            padding: 1rem;
+            font-family: var(--font-sans);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            display: none; /* Hidden until courses are added */
+        }
+
+        .pay-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* ================= IDENTITY-FIRST LOGIN MODAL ================= */
+        .login-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Designed to look like an official University ID Card */
+        .id-card-login {
+            background: white;
+            width: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            position: relative;
+        }
+
+        .id-header {
+            background: var(--navy-prestige);
+            color: var(--gold-accent);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 5px solid var(--folder-crimson);
+        }
+
+        .id-header h2 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .id-header p {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .id-body {
+            padding: 2.5rem;
+        }
+
+        .id-input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .id-input-group label {
+            display: block;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #64748B;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .id-input-group input {
+            width: 100%;
+            padding: 12px;
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            border: 2px solid #E2E8F0;
+            border-radius: 6px;
+            background: #F8FAFC;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .id-input-group input:focus {
+            outline: none;
+            border-color: var(--gold-accent);
+            background: white;
+        }
+
+        .scan-btn {
+            width: 100%;
+            background: var(--navy-prestige);
+            color: white;
+            border: none;
+            padding: 1rem;
+            font-family: var(--font-sans);
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+        
+        /* Barcode graphic on ID */
+        .id-footer {
+            height: 40px;
+            background: repeating-linear-gradient(to right, #1E1E1E, #1E1E1E 3px, white 3px, white 5px, #1E1E1E 5px, #1E1E1E 9px, white 9px, white 12px);
+            margin: 0 2.5rem 2rem 2.5rem;
+            opacity: 0.5;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="login-overlay" id="loginModal">
+        <div class="id-card-login">
+            <div class="id-header">
+                <h2>ScholarPortal</h2>
+                <p>IDENTITY VERIFICATION</p>
+            </div>
+            <div class="id-body">
+                <div class="id-input-group">
+                    <label>Enter Student ID</label>
+                    <input type="text" placeholder="XXX-XXXX-XX" id="studentId" autocomplete="off">
+                </div>
+                <button class="scan-btn" onclick="authenticate()">SCAN IDENTITY</button>
+            </div>
+            <div class="id-footer"></div>
+        </div>
+    </div>
+
+    <nav>
+        <div class="brand-logo">ScholarPortal</div>
+        <ul class="nav-links">
+            <li><a href="#">Courses</a></li>
+            <li><a href="#">Register</a></li>
+            <li><a href="#">Profile</a></li>
+        </ul>
+        <button class="nav-info-badge" id="transcriptBtn">Transcript: LOCKED</button>
+    </nav>
+
+    <main class="portal-layout">
+        
+        <section>
+            <h1 class="section-header">Course Catalog</h1>
+            <div class="catalog-grid">
+                
+                <div class="course-folder f-crimson" data-dept="DEPT: HUMANITIES">
+                    <div class="folder-paper">
+                        <div class="course-title">Advanced Literature & Ethics</div>
+                        <span class="course-credits">Credits: 3 | Fee: $450</span>
+                        <button class="add-course-btn" onclick="addCourse(this, 'Adv. Literature', 450)">Add to Semester</button>
+                    </div>
+                </div>
+
+                <div class="course-folder f-slate" data-dept="DEPT: SCIENCES">
+                    <div class="folder-paper">
+                        <div class="course-title">Quantum Mechanics Foundation</div>
+                        <span class="course-credits">Credits: 4 | Fee: $600</span>
+                        <button class="add-course-btn" onclick="addCourse(this, 'Quantum Mechanics', 600)">Add to Semester</button>
+                    </div>
+                </div>
+
+                <div class="course-folder f-emerald" data-dept="DEPT: BUSINESS">
+                    <div class="folder-paper">
+                        <div class="course-title">Macroeconomic Theory</div>
+                        <span class="course-credits">Credits: 3 | Fee: $450</span>
+                        <button class="add-course-btn" onclick="addCourse(this, 'Macroeconomics', 450)">Add to Semester</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <aside>
+            <div class="semester-docket">
+                <div class="docket-header">
+                    <span>SEMESTER DOCKET</span>
+                    <span style="color: var(--folder-crimson);">FA-2026</span>
+                </div>
+                
+                <ul class="enrolled-list" id="docketList">
+                    <li style="color: #94A3B8; font-style: italic; border: none;">No courses added yet.</li>
+                </ul>
+
+                <div class="fee-total" id="feeTotal">Total: $0</div>
+                <button class="pay-btn" id="payBtn" onclick="payFees()">Process Payment</button>
+            </div>
+        </aside>
+
+    </main>
+
+    <script>
+        let totalFees = 0;
+        let enrolledCount = 0;
+
+        // 1. Identity-First Login Logic
+        function authenticate() {
+            const idInput = document.getElementById('studentId').value;
+            if(idInput.length > 5) {
+                document.getElementById('loginModal').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loginModal').style.display = 'none';
+                }, 400);
+            } else {
+                alert("Please enter a valid Student ID.");
+            }
+        }
+
+        // 2. Add Course to Semester Docket
+        function addCourse(btnElement, courseName, fee) {
+            const list = document.getElementById('docketList');
+            
+            // Remove empty state text
+            if(enrolledCount === 0) {
+                list.innerHTML = ''; 
+            }
+
+            // Update state
+            enrolledCount++;
+            totalFees += fee;
+
+            // Add to list visually
+            const li = document.createElement('li');
+            li.innerHTML = `<span>${courseName}</span> <span>$${fee}</span>`;
+            list.appendChild(li);
+
+            // Update Total and show Pay button
+            document.getElementById('feeTotal').innerText = `Total: $${totalFees}`;
+            document.getElementById('payBtn').style.display = 'block';
+
+            // Visually disable the Add button
+            btnElement.innerText = "✓ Enrolled";
+            btnElement.classList.add('added');
+        }
+
+        // 3. Pay Fees & Unlock Transcript
+        function payFees() {
+            if(totalFees === 0) return;
+
+            // Simulate payment processing
+            const payBtn = document.getElementById('payBtn');
+            payBtn.innerText = "Processing...";
+            payBtn.style.background = "#D4AF37"; // turn gold
+
+            setTimeout(() => {
+                payBtn.innerText = "Payment Cleared";
+                payBtn.style.background = "#94A3B8"; // turn gray
+                payBtn.style.pointerEvents = "none";
+
+                // Unlock the Transcript
+                const transcriptBtn = document.getElementById('transcriptBtn');
+                transcriptBtn.innerText = "View Transcript";
+                transcriptBtn.classList.add('active');
+                
+                alert("Payment successful. Your courses have been officially registered and your transcript is now updated.");
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
